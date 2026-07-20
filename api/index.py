@@ -80,7 +80,7 @@ def main():
                     ayo 67. This is a backend
                 </h1>
                 <p style="font-size: 18px;">LC Tag Backend Server Running Smoothly!</p>
-                <img src="https://assets.musikerkennung.com/Logo.svg" alt="if u see this text it dont work" style="max-width: 500px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: block; margin: 30px auto;">
+                <img src="https://giphy.com/gifs/meme-angry-hate-iVWZdpRwUmssXcjY1q" alt="if u see this text it dont work" style="max-width: 500px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: block; margin: 30px auto;">
                 <p style="font-size: 14px; opacity: 0.8;">Image loads when the server works!</p>
             </body>
         </html>
