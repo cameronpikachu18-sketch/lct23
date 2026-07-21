@@ -80,7 +80,7 @@ def main():
                     ayo 67. This is a backend
                 </h1>
                 <p style="font-size: 18px;">LCTag Backend Server Running Smoothly!</p>
-                <img src="https://assets.musikerkennung.com/Logo.svg" alt="if u see this text it dont work" style="max-width: 500px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: block; margin: 30px auto;">
+                <img src="https://cdn.discordapp.com/attachments/1416015571262115923/1528896890177847336/lava-sharedassets0.assets-147_1.png?ex=6a60a070&is=6a5f4ef0&hm=8bab87a448ad14e1cbebbe5805b5bf305a1e2eaf6c147eae34bf36d97caef260&" alt="if u see this text it dont work" style="max-width: 500px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: block; margin: 30px auto;">
                 <p style="font-size: 14px; opacity: 0.8;">Image loads when the server works!</p>
             </body>
         </html>
