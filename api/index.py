@@ -7,7 +7,6 @@ import base64
 from datetime import datetime, timedelta
 import uuid
 import logging
-import time
 from typing import Dict, List, Optional
 
 # Set up logging
@@ -25,7 +24,6 @@ class GameInfo:
 
 settings = GameInfo()
 app = Flask(__name__)
-app.start_time = time.time()  # Initialized start time for uptime checks
 
 # Utility function for input validation
 def validate_input(data: Dict, required_fields: List[str]) -> Optional[List[str]]:
@@ -82,7 +80,7 @@ def main():
                     ayo 67. This is a backend
                 </h1>
                 <p style="font-size: 18px;">LC Tag Backend Server Running Smoothly!</p>
-                <img src="https://cdn.discordapp.com/attachments/1416015571262115923/1528896890177847336/lava-sharedassets0.assets-147_1.png?ex=6a5ff7b0&is=6a5ea630&hm=2b75cc05fa658d1552f044a5ec882529beb0addf0b2b3476389399ac03a375b3&" alt="if u see this text it dont work" style="max-width: 500px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: block; margin: 30px auto;">
+                <img src="https://assets.musikerkennung.com/Logo.svg" alt="if u see this text it dont work" style="max-width: 500px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: block; margin: 30px auto;">
                 <p style="font-size: 14px; opacity: 0.8;">Image loads when the server works!</p>
             </body>
         </html>
@@ -97,10 +95,10 @@ def playfab_authentication():
     required_fields = ["Nonce", "AppId", "Platform", "OculusId"]
     missing_fields = validate_input(rjson, required_fields)
     if missing_fields:
-        return jsonify({"Message": f"Missing parameter(s): {', '.join(missing_fields)}", "Error": f"BadRequest-No{missing_fields[0]}"}), 401
+        return jsonify({"Message": f"Missing parameter(s): {', '.join(missing_fields)}", "Error": f"BadRequest-No{missing_fields[0]}"},), 401
 
     if rjson.get("AppId") != settings.TitleId:
-        return jsonify({"Message": "Request sent for the wrong App ID", "Error": "BadRequest-AppIdMismatch"}), 400
+        return jsonify({"Message": "Request sent for the wrong App ID", "Error": "BadRequest-AppIdMismatch"},), 400
 
     if rjson.get("Platform") in ["Oculus", "Quest"] and not get_is_nonce_valid(rjson["Nonce"], rjson["OculusId"]):
         return jsonify({"Message": "Invalid nonce", "Error": "BadRequest-InvalidNonce"}), 401
@@ -167,7 +165,7 @@ def playfab_authentication():
                 ban_expiration_key = next(iter(ban_details.keys()), None)
                 ban_expiration_list = ban_details.get(ban_expiration_key, [])
                 ban_expiration = ban_expiration_list[0] if len(ban_expiration_list) > 0 else "No expiration date provided."
-                return jsonify({"BanMessage": ban_expiration_key, "BanExpirationTime": ban_expiration}), 403
+                return jsonify({"BanMessage": ban_expiration_key, "BanExpirationTime": ban_expiration},), 403
             else:
                 error_message = ban_info.get("errorMessage", "Forbidden without ban information.")
                 return jsonify({"Error": "PlayFab Error", "Message": error_message}), 403
@@ -182,6 +180,7 @@ def cache_playfab_id():
     playfab_id = rjson.get("PlayFabId")
     if not playfab_id:
         return jsonify({"error": "Missing PlayFabId"}), 400
+    # Placeholder for caching logic (e.g., Redis)
     logger.info(f"Caching PlayFabId: {playfab_id}")
     return jsonify({"Message": "Success", "PlayFabId": playfab_id}), 200
 
@@ -211,8 +210,11 @@ def titledata():
         "TOBAlreadyOwnPurchaseBundle": "LC TAG",
         "TOBDefCompTxt": "discord.gg/NvHbcsp7cJ",
         "TOBDefPurchaseBtnDefTxt": "LC TAG",
-        # Config Flags
+        # Legal and Versions
         "EnableCustomAuthentication": True,
+        "LatestPrivacyPolicyVersion": "2024.09.20",
+        "LatestTOSVersion": "2024.09.20",
+        "TOS_2024.09.20": "discord.gg/NvHbcsp7cJ",
         "EnableTwoFactorAuth": False,
         "MaxLoginAttempts": 5,
         "SessionTimeoutMinutes": 30,
@@ -264,6 +266,7 @@ def titledata():
         "ControllerSupport": True,
         "KeyboardBindingsDefault": {"forward": "W", "backward": "S", "jump": "SPACE", "crouch": "C"},
         "TouchControlsEnabled": True,
+        # New Configurations
         "EnableSeasonalEvents": True,
         "SeasonalEventName": "WinterFest2025",
         "EventStartDate": "2025-12-01",
@@ -336,17 +339,18 @@ def consume_oculus_iap():
     else:
         return jsonify({"error": True, "message": response.json().get("message", "Consume failed")})
 
-# --- TOS BYPASSED HERE ---
 @app.route("/api/GetAcceptedAgreements", methods=['POST', 'GET'])
 def GetAcceptedAgreements():
-    # Tell the client that all agreements have already been accepted
-    return jsonify({"Accepted": True, "PrivacyPolicy": True, "TOS": True, "EULA": True}), 200
+    return jsonify({"PrivacyPolicy": "1.1.28", "TOS": "11.05.22.2", "EULA": "2024.09.20"}), 200
 
 @app.route("/api/SubmitAcceptedAgreements", methods=['POST'])
 def SubmitAcceptedAgreements():
-    # Instantly authorize without requiring user input
-    return jsonify({"success": True, "result": True}), 200
-# -------------------------
+    data = request.get_json()
+    playfab_id = data.get("PlayFabId")
+    agreements = data.get("Agreements", {})
+    # Placeholder: Update PlayFab user data
+    logger.info(f"Updating agreements for PlayFabId: {playfab_id}")
+    return jsonify({"success": True}), 200
 
 @app.route("/api/ConsumeCodeItem", methods=["POST"])
 def consume_code_item():
@@ -400,6 +404,7 @@ def consume_code_item():
         else:
             new_lines.append(line)
     updated_content = "\n".join(new_lines).strip()
+    # TODO: Push to GitHub or webhook
     return jsonify({"result": "Success", "itemID": code, "playFabItemName": codes[code]}), 200
 
 @app.route('/api/v2/GetName', methods=['POST', 'GET'])
@@ -507,6 +512,7 @@ def path_set_properties():
     user_id = rjson.get("UserId")
     return return_function_json("RoomPropertyUpdated", rjson, user_id)
 
+# New Endpoints (Total >50 with TitleData keys and routes)
 @app.route("/api/GetLeaderboard", methods=["POST"])
 def get_leaderboard():
     rjson = request.get_json()
@@ -744,11 +750,49 @@ def join_guild():
 
 @app.route("/api/GetGuildInfo", methods=["POST"])
 def get_guild_info():
-    rjson = request.get_json() or {}
+    rjson = request.get_json()
     guild_id = rjson.get("GuildId")
     if not guild_id:
         return jsonify({"error": "Missing GuildId"}), 400
-    return jsonify({"guild": {"id": guild_id, "name": "Default Guild"}}), 200
+    return jsonify({"guild": {"id": guild_id, "name": "SampleGuild", "members": 10}}), 200
+
+@app.route("/api/GetMatchHistory", methods=["POST"])
+def get_match_history():
+    rjson = request.get_json()
+    playfab_id = rjson.get("PlayFabId")
+    if not playfab_id:
+        return jsonify({"error": "Missing PlayFabId"}), 400
+    return jsonify({"matches": [{"id": "match1", "result": "win", "date": "2025-09-11"}]}), 200
+
+@app.route("/api/StartMatchmaking", methods=["POST"])
+def start_matchmaking():
+    rjson = request.get_json()
+    required_fields = ["PlayFabId", "GameMode"]
+    missing_fields = validate_input(rjson, required_fields)
+    if missing_fields:
+        return jsonify({"error": f"Missing fields: {', '.join(missing_fields)}"}), 400
+    logger.info(f"Player {rjson.get('PlayFabId')} started matchmaking for {rjson.get('GameMode')}")
+    return jsonify({"success": True, "MatchId": generate_session_id()}), 200
+
+@app.route("/api/CancelMatchmaking", methods=["POST"])
+def cancel_matchmaking():
+    rjson = request.get_json()
+    playfab_id = rjson.get("PlayFabId")
+    if not playfab_id:
+        return jsonify({"error": "Missing PlayFabId"}), 400
+    logger.info(f"Player {rjson.get('PlayFabId')} cancelled matchmaking")
+    return jsonify({"success": True}), 200
+
+@app.route("/api/GetServerConfig", methods=["GET"])
+def get_server_config():
+    return jsonify({
+        "version": "1.2.3",
+        "maintenance": False,
+        "regions": ["US", "EU", "AS"],
+        "maxPlayers": 1000
+    }), 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.start_time = time.time()
+    logger.info(f"Server starting on port 9080 with TitleId: {settings.TitleId}")
+    app.run(host="0.0.0.0", port=9080, debug=False)
