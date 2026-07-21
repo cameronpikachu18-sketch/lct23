@@ -79,7 +79,7 @@ def main():
                 <h1 style="color: #eedd82; font-size: 48px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
                     ayo 67. This is a backend
                 </h1>
-                <p style="font-size: 18px;">LC Tag Backend Server Running Smoothly!</p>
+                <p style="font-size: 18px;">LCTag Backend Server Running Smoothly!</p>
                 <img src="https://assets.musikerkennung.com/Logo.svg" alt="if u see this text it dont work" style="max-width: 500px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: block; margin: 30px auto;">
                 <p style="font-size: 14px; opacity: 0.8;">Image loads when the server works!</p>
             </body>
@@ -205,11 +205,11 @@ def titledata():
         "SeasonalStoreBoardSign": "<color=red>RATE THE GAME 5 STARS!</color>\n<color=blue>.GG/UNLOADTAG</color>",
         # Text and Messages
         "EmptyFlashbackText": "FLOOR TWO NOW OPEN\n FOR BUSINESS\n\nSTILL SEARCHING FOR\nBOX LABELED 2021",
-        "MOTD": "<color=#FFC0CB>WELCOME TO LC TAG!</color>\n\n<color=#0099c2>CURRENT UPDATE: XMAS24</color>\n<color=#cacfd2>BOOST THE DISCORD FOR ALL COSMETICS (EXCLUDING STAFF COS)</color>\n<color=#41ff80>YANDERE MADE THIS MOTD</color>\n<color=#6417ff>OUR DEVELOPERS ARE: FATAL & CASHSMILE</color>\n<color=#ac1a00>CREDITS FOR GAMES OG OS: VIPER</color>\n\n<color=#91A3B0>discord.gg/NvHbcsp7cJ</color>",
+        "MOTD": "<color=#FFFF00>WELCOME TO LCTag!</color>\n<color=#00FFFF>CURRENT UPDATE: CHRISTMAS 2023</color>\n<color=#AA8EFF>discord.gg/NvHbcsp7cJ</color>",
         "TOBAlreadyOwnCompTxt": "discord.gg/NvHbcsp7cJ",
-        "TOBAlreadyOwnPurchaseBundle": "LC TAG",
+        "TOBAlreadyOwnPurchaseBundle": "LCTag",
         "TOBDefCompTxt": "discord.gg/NvHbcsp7cJ",
-        "TOBDefPurchaseBtnDefTxt": "LC TAG",
+        "TOBDefPurchaseBtnDefTxt": "LCTag",
         # Legal and Versions
         "EnableCustomAuthentication": True,
         "LatestPrivacyPolicyVersion": "2024.09.20",
