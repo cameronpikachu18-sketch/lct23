@@ -7,7 +7,7 @@ class GameInfo():
     def __init__(self):
         self.TitleId : str = "4AE94"
         self.SecretKey : str = "ZYEWZCW6PXGGKRZ8ZBUIDEJFAOXN6Z34YXH4M8F6T4PE3H4E3J"
-        self.ApiKey : str = "uinbunun"
+        self.ApiKey : str = "OC|1243306455538500|eac42f34adb53fa03247bc2e7ef9100f"
 
     def GetAuthHeaders(self) -> dict:
         return {
@@ -26,7 +26,7 @@ muteCache : dict = {}
 
 settings.TitleId = "4AE94"
 settings.SecretKey = "ZYEWZCW6PXGGKRZ8ZBUIDEJFAOXN6Z34YXH4M8F6T4PE3H4E3J"
-settings.ApiKey = "OC|1215351015000377|74cd83c38422923653545e40f7bd0cfc"
+settings.ApiKey = "OC|1243306455538500|eac42f34adb53fa03247bc2e7ef9100f"
 
 def ReturnFunctionJson(data, funcname, funcparam = {}):
     rjson = data["FunctionParameter"]
