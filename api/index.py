@@ -5,9 +5,9 @@ from datetime import datetime, timedelta
 
 class GameInfo():
     def __init__(self):
-        self.TitleId : str = "EB64D"
-        self.SecretKey : str = "N7A51URUTO48XIG583NZDH9WXW8HDZ6FTJ4NN4Q3G8BK3FRDX1"
-        self.ApiKey : str = "OC|1215351015000377|74cd83c38422923653545e40f7bd0cfc"
+        self.TitleId : str = "4AE94"
+        self.SecretKey : str = "ZYEWZCW6PXGGKRZ8ZBUIDEJFAOXN6Z34YXH4M8F6T4PE3H4E3J"
+        self.ApiKey : str = "uinbunun"
 
     def GetAuthHeaders(self) -> dict:
         return {
@@ -24,8 +24,8 @@ app : Flask = Flask(__name__)
 playfabCache : dict = {}
 muteCache : dict = {}
 
-settings.TitleId = "EB64D"
-settings.SecretKey = "N7A51URUTO48XIG583NZDH9WXW8HDZ6FTJ4NN4Q3G8BK3FRDX1"
+settings.TitleId = "4AE94"
+settings.SecretKey = "ZYEWZCW6PXGGKRZ8ZBUIDEJFAOXN6Z34YXH4M8F6T4PE3H4E3J"
 settings.ApiKey = "OC|1215351015000377|74cd83c38422923653545e40f7bd0cfc"
 
 def ReturnFunctionJson(data, funcname, funcparam = {}):
